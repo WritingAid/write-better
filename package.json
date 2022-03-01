@@ -45,6 +45,7 @@
     "del": "^6.0.0",
     "gulp": "^4.0.2",
     "gulp-typescript": "^5.0.1",
+    "gulp-zip": "^5.1.0",
     "jasmine": "^3.6.4",
     "puppeteer": "^7.1.0",
     "tsify": "^5.0.2",

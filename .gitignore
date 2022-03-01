@@ -3,3 +3,4 @@ extension/*
 spec/**/*.js
 public
 resources
+dist/*

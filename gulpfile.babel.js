@@ -1,4 +1,5 @@
 import gulp from 'gulp';
+import zip from 'gulp-zip';
 import tsify from 'tsify';
 import browserify from 'browserify';
 import source from 'vinyl-source-stream';
@@ -102,6 +103,12 @@ export const build = gulp.parallel(copyAssets, compileBackgroundScript, compileC
 build.description = 'compile all sources'
 
 export const test = gulp.series(compileTests, runTest);
+
+export const pack = gulp.series(clean, build, () => {
+    return gulp.src('extension/*')
+        .pipe(zip('extension.zip'))
+        .pipe(gulp.dest('dist'))
+})
 
 export const chromeDemo = () => {
     puppeteer.launch({
