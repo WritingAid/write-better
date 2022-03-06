@@ -2,32 +2,35 @@
     "name": "Write Better",
     "version": "0.2.1",
     "description": "English grammar suggestions for better writing",
-    "manifest_version": 2,
+    "manifest_version": 3,
     "author": "Justice Ogbonna",
     "homepage_url": "https://github.com/justiceo/write-better",
     "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAg/wAu86aayfkDEvVAGgdtl8FS2/axn1JqdDl9awFDUdSLZrCNJ/7vMJBEUp3IpgzBMF+qFH9UZFQJIuyo2vRHnmIXDMVXEfYLmIJ9WfMYQnu8sUvcTilj7zCzaWSyo1/VqGeahsRX18VZBaMyOc4vauSojZFi66ZkR+dd9JoPhbxFFAMrcZkYeoIL27+ofKRy01gCBN/p3kQtowfvQtxGA+5irSqspXPtFIeTY20ZBhGaYR1KXu9wwa9ghtuQPf00Gy8+FyDzFwemawJ3KjlATokTjqEw9Z8ZM1kB6sS0q50xSJUhlbQ+/FMFN0owm7K5UHTSXGOALS8YPnHASeP3wIDAQAB",
     "permissions": [
-        "https://docs.google.com/*",
         "storage"
     ],
-    "browser_action": {
+    "host_permissions": [
+        "https://docs.google.com/*"
+    ],
+    "action": {
         "default_icon": {
             "16": "images/icon-16x16.png",
             "24": "images/icon-24x24.png",
             "32": "images/icon-32x32.png"
         },
         "default_title": "Write Better",
-        "default_popup": "popup.html"
+        "default_popup": ""
     },
     "content_scripts": [
         {
-            "all_frames": true,
+            "all_frames": true,            
             "matches": [
                 "https://docs.google.com/*"
             ],
             "include_globs": [
                 "https://docs.google.com/document/d/*"
             ],
+            "run_at": "document_start",
             "js": [
                 "content-script.js"
             ],

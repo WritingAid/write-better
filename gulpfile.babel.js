@@ -51,7 +51,7 @@ const compileContentScriptTs = () => {
 }
 const compileContentScript = gulp.parallel(compileContentScriptTs, copyContentScriptStyle);
 const watchContentScript = () => {
-    gulp.watch(contentScript, gulp.parallel(compileContentScript));
+    gulp.watch('src/content-script/*', gulp.parallel(compileContentScript));
 }
 
 // Popup

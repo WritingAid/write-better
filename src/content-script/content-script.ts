@@ -6,6 +6,12 @@ const TAG = "content-script.ts"
 const Log = new Logger(TAG);
 const writeBetter = new WriteBetter();
 
+const injectedCode = `(function() {window['_docs_annotate_canvas_by_ext'] = 'kbfnbcaeplbcioakkpcpgfkobkghlhen';})();`;
+const script = document.createElement('script');
+script.textContent = injectedCode;
+(document.head||document.documentElement).appendChild(script);
+// script.remove();
+
 /*
 This script is started after loading when document is idle.
 The browser chooses a time to inject scripts between "document_end" and immediately after the window.onloadevent fires. The exact moment of injection depends on how complex the document is and how long it is taking to load, and is optimized for page load speed.

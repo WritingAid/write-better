@@ -31,10 +31,12 @@ export class WriteBetter {
     analyze(selector: string, inplace = true): HTMLElement {
         const e = document.querySelector(selector) as HTMLElement;
         if (e == null) {
+            Log.error("Query selector is null");
             return null;
         }
 
         if (this.getCleanText(e) == this.previousText) {
+            Log.debug("No change in content, nothing to do.");
             return e;
         }
 
@@ -59,6 +61,7 @@ export class WriteBetter {
         // Select the node that will be observed for mutations
         const targetNode = document.querySelector(selector) as HTMLElement;
         if (targetNode == null) {
+            Log.error("Editor target node is null");
             return null;
         }
 
@@ -68,7 +71,9 @@ export class WriteBetter {
         // Throttle DOM change events, to avoid calling analyze() excessively per second.
         // The trailing:true option ensures the last event is always called.
         const domChangeSubject = new Subject();
-        domChangeSubject.pipe(throttle(() => interval(1000), { leading: true, trailing: true })).subscribe(() => this.analyze(selector));
+        domChangeSubject
+            .pipe(throttle(() => interval(1000), { leading: true, trailing: true }))
+            .subscribe(() => this.analyze(selector));
 
         // Function called whenever the DOM changes, in this case, notify subject.
         const callback = () => domChangeSubject.next();
