@@ -32,7 +32,7 @@
                 "content-script.js"
             ],
             "css": [
-                "highlight.css"
+                "content-script.css"
             ]
         }
     ],

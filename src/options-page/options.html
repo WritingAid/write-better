@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head><title>My Test Extension Options</title></head>
-<body>
-
-Favorite color:
-<select id="color">
- <option value="red">red</option>
- <option value="green">green</option>
- <option value="blue">blue</option>
- <option value="yellow">yellow</option>
-</select>
-
-<label>
-  <input type="checkbox" id="like">
-  I like colors.
-</label>
-
-<div id="status"></div>
-<button id="save">Save</button>
-
-<script src="options.js"></script>
-</body>
+    <head>
+        <title>Writer Better Options</title>
+    </head>
+    <body>
+        <h2>Write Better Options</h2>
+        <select id="access-level">
+            <option value="specific" default>Enable for specific sites</option>
+            <option valaue="all">Enable for all sites</option>
+        </select>
+        <p>Enabled on:</p>
+        <ul>
+            <li>https://docs.google.com</li>
+        </ul>
+        <div id="status"></div>
+        <button id="save">Save</button>
+        <script src="options.js"></script>
+    </body>
 </html>
