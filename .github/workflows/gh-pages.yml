@@ -1,31 +1,23 @@
-name: github pages
-
+name: Deploy to GitHub Pages
 on:
-  push:
-    branches:
-      - master  # Set a branch to deploy
+  push:	
+    branches:	
+      - master
 
 jobs:
   deploy:
-    runs-on: ubuntu-18.04
+    name: Github-Pages-Deploy
+    runs-on: ubuntu-latest    
     steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true  # Fetch Hugo themes (true OR recursive)
-          fetch-depth: 1    # Fetch all history for .GitInfo and .Lastmod
 
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
-        with:
-          hugo-version: 'latest'
-          extended: true
+    # Any prerequisite steps
+    - uses: actions/checkout@master
 
-      - name: Build
-        run: hugo --minify
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-
+    # Deploy to local repo
+    - name: Deploy
+      uses: s0/git-publish-subdir-action@develop
+      env:
+        REPO: self
+        BRANCH: gh-pages
+        FOLDER: gh-pages
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
