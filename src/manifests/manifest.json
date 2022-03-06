@@ -12,9 +12,9 @@
     ],
     "browser_action": {
         "default_icon": {
-            "16": "images/quill-orange16.png",
-            "24": "images/quill-orange24.png",
-            "32": "images/quill-orange32.png"
+            "16": "images/icon-16x16.png",
+            "24": "images/icon-24x24.png",
+            "32": "images/icon-32x32.png"
         },
         "default_title": "Write Better",
         "default_popup": "popup.html"
@@ -37,10 +37,11 @@
         }
     ],
     "icons": {
-        "16": "images/quill-orange16.png",
-        "32": "images/quill-orange32.png",
-        "48": "images/quill-orange48.png",
-        "128": "images/quill-orange128.png"
+        "16": "images/icon-16x16.png",
+        "24": "images/icon-24x24.png",
+        "32": "images/icon-32x32.png",
+        "48": "images/icon-48x48.png",
+        "128": "images/icon-128x128.png"
     },
     "background": {
         "scripts": [

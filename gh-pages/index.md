@@ -1,4 +1,4 @@
-# ![logo](assets/images/quill-orange24.png) Write Better 
+# ![logo](assets/images/icon-24x24.png) Write Better 
 
 [![Build Status](https://travis-ci.org/justiceo/write-better.svg?branch=master)](https://travis-ci.org/justiceo/write-better)
 
