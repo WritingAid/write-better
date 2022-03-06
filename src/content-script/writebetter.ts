@@ -1,11 +1,12 @@
 import { from, interval, Observable, Subject } from 'rxjs';
 import { filter, map, finalize, throttle } from 'rxjs/operators';
 import { Suggestion } from './suggestion';
-import { Log } from '../shared/log';
+import { Logger } from '../shared/logger';
 import { Highlight } from './highlight';
 const writeGood: (input: string) => Suggestion[] = require('write-good');
 
 const TAG = 'writebetter.ts';
+const Log = new Logger(TAG);
 export class WriteBetter {
     previousText: string = null;
     selector: string = null; // TODO: parameterize.
@@ -43,13 +44,13 @@ export class WriteBetter {
         const subscription = this.smartSplitter(e)
             .pipe(map(e => this.applySuggestions(e, inplace)),
                 finalize(() => {
-                    Log.debug(TAG, "Done...");
+                    Log.debug("Done...");
                     WriteBetter.cache = WriteBetter.tempCache;
                     WriteBetter.tempCache = new Map();
                 }));
 
         // TODO: if not inplace, attempt to reconstruct e before returning it.
-        subscription.subscribe(e => { }, err => Log.error(TAG, err));
+        subscription.subscribe(e => { }, err => Log.error(err));
         return e;
     }
 
@@ -84,7 +85,7 @@ export class WriteBetter {
 
     applySuggestions(paragraph: HTMLElement, inplace: boolean): HTMLElement {
         const suggestions = writeGood(this.getText(paragraph));
-        Log.debug(TAG, "#applySuggestions", this.getTruncatedText(paragraph), suggestions);
+        Log.debug("#applySuggestions", this.getTruncatedText(paragraph), suggestions);
         paragraph = inplace ? paragraph : paragraph.cloneNode(true) as HTMLElement
         if (suggestions.length == 0) {
             return paragraph;
@@ -105,7 +106,7 @@ export class WriteBetter {
             const hprev = highlights[i - 1];
             if (hprev.index + hprev.offset >= h.index) {
                 highlights.splice(i, 1);
-                Log.debug(TAG, "Skipping overlapping highlight with text `", this.getText(h.element), "`");
+                Log.debug("Skipping overlapping highlight with text `", this.getText(h.element), "`");
                 continue;
             }
         }
@@ -127,7 +128,7 @@ export class WriteBetter {
                     this.updateCSS(this.selector, h);
                     break;
                 } else {
-                    Log.debug(TAG, `#applySuggestions: skipping not matching node '${currMatch.textContent}' for suggestion '${this.getText(h.element)}'`);
+                    Log.debug(`#applySuggestions: skipping not matching node '${currMatch.textContent}' for suggestion '${this.getText(h.element)}'`);
                 }
             }
         }
@@ -136,18 +137,18 @@ export class WriteBetter {
     }
 
     updateTextNode(node: Node, h: Highlight): HTMLElement {
-        Log.debug(TAG, `#updateTextNode: highlight '${this.getText(h.element)}' in  '${this.getTruncatedString(node.textContent)}'`);
+        Log.debug(`#updateTextNode: highlight '${this.getText(h.element)}' in  '${this.getTruncatedString(node.textContent)}'`);
         const parent = node.parentElement;
         // If already highlighted, just return it.
         if (parent.classList.contains("writebetter-highlight")) {
-            Log.debug(TAG, `#updateTextNode: skipping already highlighted suggestion '${this.getText(h.element)}'`);
+            Log.debug(`#updateTextNode: skipping already highlighted suggestion '${this.getText(h.element)}'`);
             return parent;
         }
 
         // Find location of suggestion in the text node containing it.
         const index = node.textContent.indexOf(this.getText(h.element), 0);
         if (index < 0) {
-            Log.warn(TAG, `#updateTextNode, suggestion '${this.getText(h.element)}' not found`);
+            Log.warn(`#updateTextNode, suggestion '${this.getText(h.element)}' not found`);
             return parent;
         }
 
@@ -159,7 +160,7 @@ export class WriteBetter {
         parent.removeChild(node);
 
         if (originalText != this.getText(parent)) {
-            Log.error(TAG, `#updateTextNode: improperly modified parent '${this.getText(parent)}'`);
+            Log.error(`#updateTextNode: improperly modified parent '${this.getText(parent)}'`);
             // TODO: consider reverting the change.
         }
         return parent;
@@ -205,7 +206,7 @@ export class WriteBetter {
     // Only returns elements that contain text which *needs* to be analyzed.
     // NB: Concating the result of this function would not yield its input.
     smartSplitter(e: HTMLElement): Observable<HTMLElement> {
-        Log.debug(TAG, "#smartSplitter");
+        Log.debug("#smartSplitter");
         if (this.isGoogleDocs()) {
             return from(e.querySelectorAll<HTMLElement>(":scope .kix-paragraphrenderer").values())
                 .pipe(filter(e => !!this.getCleanText(e))) // only emit paragraphs with text.
@@ -234,7 +235,7 @@ export class WriteBetter {
 
     /* Stop observers and remove highlight CSS from the DOM */
     cleanup() {
-        Log.debug(TAG, `#cleanup`)
+        Log.debug(`#cleanup`)
         this.css.remove();
 
         if (this.observer) {

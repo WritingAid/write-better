@@ -1,8 +1,9 @@
-import { Log } from '../shared/log';
+import { Logger } from '../shared/logger';
 import { Message } from '../shared/shared';
 import { WriteBetter } from './writebetter';
 
 const TAG = "content-script.ts"
+const Log = new Logger(TAG);
 const writeBetter = new WriteBetter();
 
 /*
@@ -12,7 +13,7 @@ Content scripts running at "document_idle" do not need to listen for the window.
 */
 const init = () => {
     if (!writeBetter.isGoogleDocs()) {
-        Log.debug(TAG, "Invalid editor model");
+        Log.debug("Invalid editor model");
         return;
     }
 

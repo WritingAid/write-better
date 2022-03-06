@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sorry to see you go :(</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+  <link href="uninstall.css" rel="stylesheet" />
+</head>
+
+<body>
+
+  <div class="container-fluid navigation py-1">
+    <div class="container d-flex justify-content-center align-items-center">
+      <a class="navbar-brand " href="#">
+        <img src="./images/icon.png" class="img-fluid logo" alt="">
+      </a>
+    </div>
+  </div>
+
+
+  <div class="container pt-5">
+    <div class="row">
+      <div class="col-md-8">
+        <p class="heading">Sorry to see you go</p>
+        <p>uhm why are you leaving?</p>
+        <form action="post" autocomplete="off" name="google-sheet">
+          <div class="form-check mb-1">
+            <input class="form-check-input" type="checkbox" value="yes" id="check1"
+              name="I didn't find a specific feature I needed">
+            <label class="form-check-label" for="check1">
+              The extension is great but I didn't find a specific feature I needed
+            </label>
+          </div>
+
+          <div class="form-check mb-1">
+            <input class="form-check-input" type="checkbox" name="Didn't work as I expected" value="yes" id="check2">
+            <label class="form-check-label" for="check2">
+              The extension didn't work as I expected
+            </label>
+          </div>
+
+          <div class="form-check mb-1">
+            <input class="form-check-input" name="I found a better extension/alternative" type="checkbox" value="yes"
+              id="check3">
+            <label class="form-check-label" for="check3">
+              I found a better extension/alternative
+            </label>
+          </div>
+
+          <div class="form-check mb-1">
+            <input class="form-check-input" type="checkbox" name="Temporary uninstall" value="yes" id="check4">
+            <label class="form-check-label" for="check4">
+              This is a temporary uninstall
+            </label>
+          </div>
+
+
+          <div class="form-check mb-1">
+            <input class="form-check-input" type="checkbox" name="Other" value="optionFive" id="check4">
+            <label class="form-check-label" for="check4">
+              Other
+            </label>
+          </div>
+
+
+          <div class="form-floating mt-4">
+            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="Reason"
+              style="height: 100px"></textarea>
+            <label for="floatingTextarea2">Tell us more</label>
+          </div>
+
+          <input type="submit" value="Submit" class="customBtn btn btn-primary">
+        </form>
+
+
+      </div>
+
+      <div class="col-md-4 d-none d-md-flex justify-content-center align-items-start">
+        <img src="./images/sad-birdie.jpg" class="img-fluid" alt="image">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container-fluid footer pt-4">
+    <div class="row">
+      <div class="col-md-12">
+        <p class="text-center">Copyright © 2022 All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+  <script src="uninstall.js">  </script>
+</body>
+</html>
