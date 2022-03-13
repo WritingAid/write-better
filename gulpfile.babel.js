@@ -92,7 +92,7 @@ const copyFirefoxManifest = () => {
 }
 
 // Assets
-const assets = ['assets/**/*'];
+const assets = ['assets/**/*', 'src/shared/tiny-feedback/*'];
 const originalIconPath = 'assets/images/icon.png'; // png scale better than jpeg for resizing purposes.
 const copyAssets = () => {
     return copy(assets, outDir);

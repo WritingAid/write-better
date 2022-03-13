@@ -1,0 +1,108 @@
+<div id="tiny-feedback">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="tiny-feedback.css" rel="stylesheet">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="card p-3 background border-0">
+                    <form action="post" autocomplete="off" name="google-sheet">
+                        <div class="flex justify-content-between" id="section1">
+                            <div class="label">
+                                <label class="form-check-label label">
+                                    Enjoying ABC Extension?
+                                </label>
+                            </div>
+                            <div class="checks d-flex ms-3 ">
+                                <div class="check1">
+                                    <input class="form-check-input field" type="radio" value="yes" id="flexCheckDefault"
+                                        name="Enjoying" style="display: none;">
+                                    <label class="form-check-label label" for="flexCheckDefault">
+                                        YES
+                                    </label>
+                                </div>
+                                <div class="check1 ms-4">
+                                    <input class="form-check-input field" type="radio" value="no" id="flexCheckDefault1"
+                                        name="Enjoying" style="display: none;">
+                                    <label class="form-check-label label" for="flexCheckDefault1">
+                                        NO
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="hide" id="section2">
+                            <div class="sectionTwo flex justify-content-between  align-items-center">
+                                <div class="label">
+                                    <label class="form-check-label">
+                                        You can help us by rating it
+                                    </label>
+                                </div>
+                                <div class="checks d-flex ms-3 ">
+                                    <div class="stars">
+
+                                        <input class="star star-5" id="star-5" type="radio" name="star" />
+                                        <label class="star star-5" for="star-5"></label>
+                                        <input class="star star-4" id="star-4" type="radio" name="star" />
+                                        <label class="star star-4" for="star-4"></label>
+                                        <input class="star star-3" id="star-3" type="radio" name="star" />
+                                        <label class="star star-3" for="star-3"></label>
+                                        <input class="star star-2" id="star-2" type="radio" name="star" />
+                                        <label class="star star-2" for="star-2"></label>
+                                        <input class="star star-1" id="star-1" type="radio" name="star" />
+                                        <label class="star star-1" for="star-1"></label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="thanks btn1">No Thanks</button>
+                                <button type="submit" class="thanks btn2 hide">Submit</button>
+                            </div>
+                        </div>
+
+                        <div class="hide" id="section3">
+                            <div>
+                                <div class="form-floating">
+                                    <textarea class="form-control txtArea" placeholder="How can we make it better?"
+                                        id="txtArea" name="Feedback"
+                                        style="min-height: 80px;height: auto; font-size: 16px;"></textarea>
+                                    <label for="txtArea">How can we make it better?</label>
+                                </div>
+                            </div>
+                            <div class="" id="btnSection">
+                                <div class="d-flex justify-content-end mt-2">
+                                    <button class="customBtn" type="submit">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="hide" id="section4">
+                            <h6 class="text-center">Thanks for the feedback!</h6>
+                        </div>
+
+
+                        <div class="hide" id="section5">
+                            <h6 class="text-center">Sending Your Feedback...</h6>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="spans mt-1">
+                    <span class="span1 me-1 bgDark"> </span>
+                    <span class="span2 mx-1"> </span>
+                    <span class="span3 ms-1"> </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+        </script>
+    <script src="https://kit.fontawesome.com/38860492c4.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="tiny-feedback.js"></script>
+</div>
