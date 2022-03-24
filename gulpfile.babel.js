@@ -1,4 +1,7 @@
+import 'dotenv/config'
 import gulp from 'gulp';
+import bump from 'gulp-bump';
+import filter from 'gulp-filter';
 import zip from 'gulp-zip';
 import tsify from 'tsify';
 import browserify from 'browserify';
@@ -129,6 +132,21 @@ const build = gulp.series(clean, gulp.parallel(
     compilePopupScript,
     compileOptionsPage,
     copyManifest));
+
+// Bump package versions
+// To bump to a major version, set the env variable as in `RELEASE=major gulp bumpPackageJson`
+export const bumpPackageJson = () => {
+    const packageJsonFilter = filter(['package.json'], {restore: true});
+    const manifestFilter = filter(['manifest.json'], {restore: true});
+
+    return gulp.src(['./package.json', './src/manifests/manifest.json'])
+    .pipe(bump({type: process.env.RELEASE}))
+    .pipe(packageJsonFilter)
+    .pipe(gulp.dest('./'))
+    .pipe(packageJsonFilter.restore)
+    .pipe(manifestFilter)
+    .pipe(gulp.dest('./src/manifests'));
+};
 
 // TODO: Add a minify task for pack.
 const pack = gulp.series(build, () => {

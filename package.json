@@ -1,6 +1,6 @@
 {
   "name": "write-better",
-  "version": "22.03.24.1",
+  "version": "0.2.1",
   "description": "Grammar and writing style suggestions to improve the quality of your writings",
   "scripts": {
     "test": "gulp Test",
@@ -27,9 +27,9 @@
     "words"
   ],
   "dependencies": {
-    "rxjs": "^6.6.3",
     "@sentry/browser": "^6.18.1",
     "@sentry/tracing": "^6.18.1",
+    "rxjs": "^6.6.3",
     "write-good": "github:justiceo/write-good"
   },
   "devDependencies": {
@@ -48,6 +48,8 @@
     "del": "^6.0.0",
     "dotenv": "^16.0.0",
     "gulp": "^4.0.2",
+    "gulp-bump": "^3.2.0",
+    "gulp-filter": "^7.0.0",
     "gulp-typescript": "^5.0.1",
     "gulp-zip": "^5.1.0",
     "jasmine": "^3.6.1",
