@@ -148,7 +148,7 @@ const launchChrome = () => {
 };
 
 // Tests
-const testSpecs = ['spec/**/*.ts'];
+const testSpecs = ['spec/**/*.ts', 'src/content-script/suggestion.ts'];
 const compileTests = () => {
     return gulp.src(testSpecs)
         .pipe(ts({
