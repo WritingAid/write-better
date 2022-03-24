@@ -1,6 +1,6 @@
 {
   "name": "write-better",
-  "version": "0.2.1",
+  "version": "22.03.24-rc.4",
   "description": "Grammar and writing style suggestions to improve the quality of your writings",
   "scripts": {
     "test": "gulp Test",
@@ -49,8 +49,7 @@
     "del": "^6.0.0",
     "dotenv": "^16.0.0",
     "gulp": "^4.0.2",
-    "gulp-bump": "^3.2.0",
-    "gulp-filter": "^7.0.0",
+    "gulp-json-editor": "^2.5.6",
     "gulp-typescript": "^5.0.1",
     "gulp-zip": "^5.1.0",
     "jasmine": "^3.6.1",

@@ -1,8 +1,6 @@
 import 'dotenv/config'
 import fs from 'fs';
 import gulp from 'gulp';
-import bump from 'gulp-bump';
-import filter from 'gulp-filter';
 import zip from 'gulp-zip';
 import tsify from 'tsify';
 import browserify from 'browserify';
@@ -15,6 +13,7 @@ import Jimp from 'jimp';
 import puppeteer from 'puppeteer';
 import jsonConcat from 'json-concat';
 import calver from 'calver';
+import jeditor from 'gulp-json-editor';
 
 // The directory where generated extension files are placed.
 // You can load the extension directory from the directory via "Load unpacked".
@@ -67,7 +66,7 @@ const compilePopupScriptTs = () => {
 const copyPopupHtml = () => {
     return copy('src/popup/popup.html', outDir);
 }
-const compilePopupScript =  gulp.parallel(compilePopupScriptTs, copyPopupHtml);
+const compilePopupScript = gulp.parallel(compilePopupScriptTs, copyPopupHtml);
 const watchPopupScript = () => {
     gulp.watch(popupScript, gulp.parallel(compilePopupScript));
 }
@@ -137,26 +136,22 @@ const build = gulp.series(clean, gulp.parallel(
 
 // Bump package versions
 // To bump to a major version, set the env variable as in `RELEASE=major gulp bumpPackageJson`
-export const bumpPackageJson = () => {
-
+const bump = (jsonFile, dest) => {
+    // Read current version from package.json.
     // `fs` is used instead of require to prevent caching in watch (require caches)
-    const pkg= JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+    const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 
-    const format = '0y.0m.0d.patch'; // 0-padded year, 0-padded month and 0-padded day.
-    const newVer = calver.inc(format, pkg.version, 'calendar')
-    const packageJsonFilter = filter(['package.json'], {restore: true});
-    const manifestFilter = filter(['manifest.json'], {restore: true});
+    const format = '0y.0m.0d'; // 0-padded year, 0-padded month and 0-padded day.
+    const newVer = calver.inc(format, pkg.version, 'rc');
 
-    // TODO: The issue here is that gulp-bump doesn't support calver.
-    // It depends on bump-regex which doesn't support calver.
-    return gulp.src(['./package.json', './src/manifests/manifest.json'])
-    .pipe(bump({version: newVer}))
-    .pipe(packageJsonFilter)
-    .pipe(gulp.dest('./'))
-    .pipe(packageJsonFilter.restore)
-    .pipe(manifestFilter)
-    .pipe(gulp.dest('./src/manifests'));
+    return gulp.src(jsonFile)
+        .pipe(jeditor({ 'version': newVer }))
+        .pipe(gulp.dest(dest));
 };
+
+export const bumpVersion = gulp.parallel(
+    () => bump('./package.json', './'), () => bump('./src/manifests/manifest.json', './src/manifests/'));
+
 
 // TODO: Add a minify task for pack.
 const pack = gulp.series(build, () => {
