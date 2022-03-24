@@ -43,6 +43,7 @@
     "@types/puppeteer": "^5.4.5",
     "@wext/shipit": "^0.2.1",
     "browserify": "^17.0.0",
+    "calver": "^21.11.3",
     "chromedriver": "^98.0.1",
     "decache": "^4.6.1",
     "del": "^6.0.0",
