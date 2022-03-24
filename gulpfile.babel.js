@@ -134,8 +134,8 @@ const build = gulp.series(clean, gulp.parallel(
     copyManifest));
 
 // Bump package versions
-// To bump to a major version, set the env variable as in `RELEASE=major gulp bumpPackageJson`
-export const bumpPackageJson = () => {
+// To bump to a major version, set the env variable as in `RELEASE=major gulp Pack`
+const bumpVersion = () => {
     const packageJsonFilter = filter(['package.json'], {restore: true});
     const manifestFilter = filter(['manifest.json'], {restore: true});
 
@@ -149,7 +149,7 @@ export const bumpPackageJson = () => {
 };
 
 // TODO: Add a minify task for pack.
-const pack = gulp.series(build, () => {
+const pack = gulp.series(bumpVersion, build, () => {
     return gulp.src('extension/*')
         .pipe(zip('extension.zip'))
         .pipe(gulp.dest('dist'))
