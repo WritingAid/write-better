@@ -1,6 +1,6 @@
 {
   "name": "write-better",
-  "version": "22.03.24-rc.4",
+  "version": "22.03.24",
   "description": "Grammar and writing style suggestions to improve the quality of your writings",
   "scripts": {
     "test": "gulp Test",
@@ -14,18 +14,7 @@
     "type": "git",
     "url": "https://github.com/justiceo/write-better"
   },
-  "keywords": [
-    "english",
-    "checker",
-    "ginger",
-    "grammar",
-    "grammarly",
-    "language",
-    "linter",
-    "prose",
-    "writing",
-    "words"
-  ],
+  "keywords": ["english", "checker", "ginger", "grammar", "grammarly", "language", "linter", "prose", "writing", "words"],
   "dependencies": {
     "@sentry/browser": "^6.18.1",
     "@sentry/tracing": "^6.18.1",
