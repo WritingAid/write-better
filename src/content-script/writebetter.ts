@@ -52,7 +52,12 @@ export class WriteBetter {
     }
 
 
-    analyzeAndWatch(targetNode: HTMLElement): void {       
+    analyzeAndWatch(targetNode: HTMLElement): void { 
+        
+        // If the webpage explicitly set spellcheck=false, respect it. Example use-case is online code editors.
+        if(targetNode.hasAttribute("spellcheck") && targetNode.getAttribute("spellcheck") === "false") {
+            return;
+        }
 
         // Options for the observer (which mutations to observe)
         const config: MutationObserverInit = { attributes: true, childList: true, subtree: true, characterData: true };
