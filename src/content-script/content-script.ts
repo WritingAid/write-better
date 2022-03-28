@@ -18,13 +18,24 @@ The browser chooses a time to inject scripts between "document_end" and immediat
 Content scripts running at "document_idle" do not need to listen for the window.onload event, they are guaranteed to run after the DOM is complete.
 */
 const init = () => {
-    if (!writeBetter.isGoogleDocs()) {
-        Log.debug("Invalid editor model");
+    if (writeBetter.isGoogleDocs()) {
+        Log.debug("Analyzing google docs.");
+        const targetNode = document.querySelector('.kix-paginateddocumentplugin') as HTMLElement;
+        writeBetter.analyzeAndWatch(targetNode);
         return;
     }
 
-    // TODO: needs a ways to stop this when plugin is disabled (though disabling not part of v1.).
-    writeBetter.analyzeAndWatch('.kix-paginateddocumentplugin');
+    // Check for textarea
+
+    // Check for contenteditable
+    const contentEditables = document.querySelectorAll('[contenteditable=true]');
+    if(contentEditables.length > 0) {
+        Log.debug("Analyzing contenteditables, count: ", contentEditables.length);
+        contentEditables.forEach( contentEditable => writeBetter.analyzeAndWatch(contentEditable as HTMLElement));
+    }
+    
+
+    // TODO: needs a ways to stop this when plugin is disabled (though disabling not part of v1.). 
 }
 
 const onMessage = (msg: Message, _: chrome.runtime.MessageSender, callback: (response?: any) => void) => {
