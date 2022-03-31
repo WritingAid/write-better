@@ -6,10 +6,10 @@ const TAG = "content-script.ts"
 const Log = new Logger(TAG);
 const writeBetter = new WriteBetter();
 
-const injectedCode = `(function() {window['_docs_annotate_canvas_by_ext'] = 'kbfnbcaeplbcioakkpcpgfkobkghlhen';})();`;
-const script = document.createElement('script');
-script.textContent = injectedCode;
-(document.head||document.documentElement).appendChild(script);
+// const injectedCode = `(function() {window['_docs_annotate_canvas_by_ext'] = 'kbfnbcaeplbcioakkpcpgfkobkghlhen';})();`;
+// const script = document.createElement('script');
+// script.textContent = injectedCode;
+// (document.head||document.documentElement).appendChild(script);
 // script.remove();
 
 /*

@@ -1,5 +1,8 @@
 // See https://codepen.io/justiceo/pen/BaQZBqa?editors=1010
-
+// Auto reload
+document.querySelector('#reload-extension').addEventListener('click', function () {
+    chrome.runtime.reload();
+});
 
 // Save options to chrome.storage
 function save_options() {
@@ -57,3 +60,5 @@ class BrowserAction {
 
 document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById('save').addEventListener('click', save_options);
+
+

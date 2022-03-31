@@ -28,7 +28,6 @@ export class WriteBetter {
             } `;
 
     constructor() {
-        Log.warn("initialized");
         this.css = document.createElement('style');
         this.css.title = 'write-better-css-file';
         this.css.id = 'write-better-css';

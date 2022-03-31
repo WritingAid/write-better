@@ -14,7 +14,7 @@
       "32": "images/icon-32x32.png"
     },
     "default_title": "Write Better",
-    "default_popup": ""
+    "default_popup": "popup.html"
   },
   "content_scripts": [{
     "all_frames": true,
