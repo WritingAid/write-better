@@ -14,8 +14,20 @@
     "type": "git",
     "url": "https://github.com/justiceo/write-better"
   },
-  "keywords": ["english", "checker", "ginger", "grammar", "grammarly", "language", "linter", "prose", "writing", "words"],
+  "keywords": [
+    "english",
+    "checker",
+    "ginger",
+    "grammar",
+    "grammarly",
+    "language",
+    "linter",
+    "prose",
+    "writing",
+    "words"
+  ],
   "dependencies": {
+    "@floating-ui/dom": "^0.4.2",
     "@sentry/browser": "^6.18.1",
     "@sentry/tracing": "^6.18.1",
     "rxjs": "^6.6.3",

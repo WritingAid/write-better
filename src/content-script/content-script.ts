@@ -29,6 +29,7 @@ const init = () => {
 
     // Check for contenteditable
     const contentEditables = document.querySelectorAll('[contenteditable=true]');
+    // TODO: if there are more than 1, need to be careful about placing icon.
     if(contentEditables.length > 0) {
         Log.debug("Analyzing contenteditables, count: ", contentEditables.length);
         contentEditables.forEach( contentEditable => writeBetter.analyzeAndWatch(contentEditable as HTMLElement));

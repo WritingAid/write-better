@@ -3,6 +3,13 @@ import { filter, map, finalize, throttle } from 'rxjs/operators';
 import { Suggestion } from './suggestion';
 import { Logger } from '../shared/logger';
 import { Highlight } from './highlight';
+import {
+    computePosition,
+    flip,
+    shift,
+    offset,
+    arrow,
+} from '@floating-ui/dom';
 const writeGood: (input: string) => Suggestion[] = require('write-good');
 
 const TAG = 'writebetter.ts';
@@ -52,12 +59,53 @@ export class WriteBetter {
     }
 
 
-    analyzeAndWatch(targetNode: HTMLElement): void { 
-        
+    analyzeAndWatch(targetNode: HTMLElement): void {
+
         // If the webpage explicitly set spellcheck=false, respect it. Example use-case is online code editors.
-        if(targetNode.hasAttribute("spellcheck") && targetNode.getAttribute("spellcheck") === "false") {
+        if (targetNode.hasAttribute("spellcheck") && targetNode.getAttribute("spellcheck") === "false") {
             return;
         }
+
+        // Add icon at bottom right corner.
+        const button = document.querySelector('#button');
+        const tooltip = document.querySelector('#tooltip') as HTMLElement;
+        const arrowElement = document.querySelector('#arrow') as HTMLElement;
+
+
+        function update() {
+            computePosition(button, tooltip, {
+                placement: 'top',
+                middleware: [
+                    offset(6),
+                    flip(),
+                    shift({ padding: 5 }),
+                    arrow({ element: arrowElement }),
+                ],
+            }).then(({ x, y }) => {
+                Object.assign(tooltip.style, {
+                    left: `${x}px`,
+                    top: `${y}px`,
+                });
+            });
+        }
+
+        function showTooltip() {
+            tooltip.style.display = 'block';
+            update();
+        }
+
+        function hideTooltip() {
+            tooltip.style.display = '';
+        }
+
+        [
+            ['mouseenter', showTooltip],
+            ['mouseleave', hideTooltip],
+            ['focus', showTooltip],
+            ['blur', hideTooltip],
+        ].forEach(([event, listener]) => {
+            button.addEventListener(event, listener);
+        });
 
         // Options for the observer (which mutations to observe)
         const config: MutationObserverInit = { attributes: true, childList: true, subtree: true, characterData: true };
@@ -77,11 +125,11 @@ export class WriteBetter {
 
         // Start observing the target node for configured mutations
         try {
-         this.observer.observe(targetNode, config);
-        } catch(e) {
-           if(e instanceof TypeError) {
-               Log.error("targetNode is not a Node, but ", typeof e);               
-           }
+            this.observer.observe(targetNode, config);
+        } catch (e) {
+            if (e instanceof TypeError) {
+                Log.error("targetNode is not a Node, but ", typeof e);
+            }
         }
 
         // Trigger an initial call for analysis, incase extension is loaded after DOM is setup.
@@ -233,18 +281,18 @@ export class WriteBetter {
     // Ref - https://stackoverflow.com/a/4588211
     genSelector(el): string {
         var names = [];
-        while (el.parentNode){
-          if (el.id){
-            names.unshift('#'+el.id);
-            break;
-          }else{
-            if (el==el.ownerDocument.documentElement) names.unshift(el.tagName);
-            else{
-              for (var c=1,e=el;e.previousElementSibling;e=e.previousElementSibling,c++);
-              names.unshift(el.tagName+":nth-child("+c+")");
+        while (el.parentNode) {
+            if (el.id) {
+                names.unshift('#' + el.id);
+                break;
+            } else {
+                if (el == el.ownerDocument.documentElement) names.unshift(el.tagName);
+                else {
+                    for (var c = 1, e = el; e.previousElementSibling; e = e.previousElementSibling, c++);
+                    names.unshift(el.tagName + ":nth-child(" + c + ")");
+                }
+                el = el.parentNode;
             }
-            el=el.parentNode;
-          }
         }
         return names.join(" > ");
     }

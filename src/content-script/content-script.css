@@ -7,6 +7,26 @@ span.writebetter-highlight:hover {
     background: #f0f0f0;
 }
 
+#tooltip {
+    display:none;
+    position: absolute;
+    background: #222;
+    color: white;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 90%;
+    pointer-events: none;
+}
+
+#arrow {
+    position: absolute;
+    background: #333;
+    width: 8px;
+    height: 8px;
+    transform: rotate(45deg);
+  }
+
 span.writebetter-highlight:before,
 span.writebetter-highlight:after {
     display: block;
