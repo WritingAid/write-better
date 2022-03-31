@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<!-- Original source https://gist.githubusercontent.com/smagch/3270ff7b5e62c0dbfebea3464fbcab5a/raw/1e5b63811da39f40d4f35aed303d0eee9bc5601d/index.html
+-->
+<head>
+    <title>Strepsirrhini</title>
+    <meta name="viewport" content="user-scalable=no" />
+
+    <style>
+        body {
+            margin: 0;
+            font-size: 1em;
+        }
+
+        .controls {
+            height: 60px;
+            line-height: 60px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-left: 20px;
+            background-color: white;
+            z-index: 1;
+            width: 100%;
+        }
+
+        button {
+            margin-left: 20px;
+        }
+
+        .container {
+            transform-origin: 0 0;
+            position: absolute;
+            top: 100px;
+            left: 200px;
+            right: 200px;
+            bottom: 20px;
+            overflow: scroll;
+            border: 1px solid black;
+        }
+
+        div[data-page] {
+            position: relative;
+            width: 600px;
+            margin: 100px;
+            user-select: none;
+        }
+
+        canvas {
+            position: absolute;
+            left: 0;
+            top: 0;
+            pointer-events: none;
+            user-select: none;
+            z-index: 1;
+            -webkit-user-select: none;
+            /* Chrome all / Safari all */
+            -moz-user-select: none;
+        }
+
+        p {
+            margin: 0;
+            user-select: text;
+        }
+
+        body.mousedown canvas {
+            pointer-events: none;
+        }
+
+        body.selecting canvas {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="controls">
+        <a href="https://en.wikipedia.org/wiki/Strepsirrhini">text from Strepsirrhini</a>
+        <button id="hightlight-button">highlight selection</button>
+        <button id="zoom-in-button">zoom in</button>
+        <button id="zoom-out-button">zoom out</button>
+    </div>
+
+    <div class="container">
+
+        <div data-page="1">
+            <p>Strepsirrhini or Strepsirhini (Listeni/ˌstrɛpsəˈraɪniː/; strep-sə-ry-nee) is a suborder of primates that
+                includes the lemuriform primates, which consist of the lemurs of Madagascar, galagos ("bushbabies") and
+                pottos from Africa, and the lorises from India and southeast Asia.[a] Collectively they are referred to
+                as strepsirrhines. Also belonging to the suborder are the extinct adapiform primates, a diverse and
+                widespread group that thrived during the Eocene (56 to 34 million years ago [mya]) in Europe, North
+                America, and Asia, but disappeared from most of the Northern Hemisphere as the climate cooled. The last
+                of the adapiforms died out at the end of the Miocene (~7 mya). Adapiforms are sometimes referred to as
+                being "lemur-like", although the diversity of both lemurs and adapiforms does not support this
+                comparison. The two leading taxonomic classifications for the suborder divide living strepsirrhine
+                primates into either two superfamilies (Lemuroidea and Lorisoidea) within the infraorder Lemuriformes or
+                two infraorders, Lemuriformes and Lorisiformes. The suborder represents a related group, and replaced
+                the widely used and now obsolete suborder Prosimii ("prosimians"), which included strepsirrhines and
+                tarsiers, a grouping based primarily on shared anatomical traits. Today, Strepsirrhini excludes the
+                tarsiers, which are now grouped in the other major primate suborder, Haplorhini, along with the monkeys
+                and apes (simians or anthropoids). Strepsirrhines are often inappropriately referred to as "living
+                fossils". Instead, they have evolved for millions of years under natural selection, and have diversified
+                to fill many ecological niches. Some of their traits may be derived from ancestral primates, while
+                others are unique to strepsirrhines.</p>
+        </div>
+
+        <div data-page="2">
+            <p>Strepsirrhines are defined by their wet nose or rhinarium. They also have a smaller brain than comparably
+                sized simians, large olfactory lobes for smell, a vomeronasal organ to detect pheromones, and a
+                bicornuate uterus with an epitheliochorial placenta. Their eyes contain a reflective layer to improve
+                their night vision, and their eye sockets include a ring of bone around the eye, but they lack a wall of
+                thin bone behind it. Strepsirrhine primates produce their own vitamin C, whereas haplorhine primates
+                must obtain it from their diets. Lemuriform primates are characterized by a toothcomb, a specialized set
+                of teeth in the front, lower part of the mouth mostly used for combing fur during grooming. Often, the
+                toothcomb is incorrectly used to characterize all strepsirrhines. Instead, it is unique to lemuriforms
+                and is not seen among adapiforms. Lemuriforms groom orally, and also possess a grooming claw on the
+                second toe of each foot for scratching in areas that are inaccessible to the mouth and tongue. It is
+                unclear whether adapiforms possessed grooming claws.</p>
+        </div>
+
+        <div data-page="3">
+            <p>The taxonomy of strepsirrhines is controversial and has a complicated history. Confused taxonomic
+                terminology and oversimplified anatomical comparisons have created misconceptions about primate and
+                strepsirrhine phylogeny, illustrated by the media attention surrounding the single "Ida" fossil in 2009.
+                Strepsirrhines diverged from the haplorhine primates near the beginning of the primate radiation between
+                55 and 90 mya. Older divergence dates are based on genetic analysis estimates, while younger dates are
+                based on the scarce fossil record. Lemuriform primates may have evolved from either cercamoniines or
+                sivaladapids, both of which were adapiforms that may have originated in Asia. They were once thought to
+                have evolved from adapids, a more specialized and younger branch of adapiform primarily from Europe.
+                Lemurs rafted from Africa to Madagascar between 47 and 54 mya, whereas the lorises split from the
+                African galagos around 40 mya and later colonized Asia. Both living and extinct strepsirrhines are
+                behaviorally diverse, although all are primarily arboreal (tree-dwelling). Most living lemuriforms are
+                nocturnal, while most extinct adapiforms were diurnal. Both living and extinct groups primarily fed on
+                fruit, leaves, and insects. Many of today's strepsirrhines are endangered due to habitat destruction,
+                hunting for bushmeat, and live capture for the exotic pet trade.</p>
+        </div>
+    </div>
+
+    <div class="container" contenteditable="true">
+        <button id="button" aria-describedby="tooltip">
+            My button
+          </button>
+          <div id="tooltip" role="tooltip">My tooltip
+        
+          <div id="arrow"></div>
+          </div>
+    </div>
+
+
+    <script>
+
+        function parents(node, isParent) {
+            while (node) {
+                if (isParent(node)) {
+                    return node;
+                }
+                node = node.parentNode;
+            }
+            return null;
+        }
+
+        function isPageNode(node) {
+            return node.tagName === 'DIV';
+        }
+
+        function intersectRect(r1, r2) {
+            return !(r2.left > r1.right ||
+                r2.right < r1.left ||
+                r2.top > r1.bottom ||
+                r2.bottom < r1.top);
+        }
+
+        function substractRect(r1, r2) {
+            if (!intersectRect(r1, r2)) {
+                return null;
+            }
+
+            const left = Math.max(r1.left, r2.left);
+            const right = Math.min(r1.right, r2.right);
+            const bottom = Math.min(r1.bottom, r2.bottom);
+            const top = Math.max(r1.top, r2.top);
+            const width = right - left;
+            const height = bottom - top;
+            return { left, right, bottom, top, width, height };
+        }
+
+        function mergeRect(r1, r2) {
+            const left = Math.min(r1.left, r2.left);
+            const right = Math.max(r1.right, r2.right);
+            const bottom = Math.max(r1.bottom, r2.bottom);
+            const top = Math.min(r1.top, r2.top);
+            const width = right - left;
+            const height = bottom - top;
+            return { left, right, bottom, top, width, height };
+        }
+
+        function splitRect(boundingBox, elements, rects, { deltaX, deltaY }) {
+            let i = 0;
+            rects = Array.from(rects);
+            let len = rects.length;
+            return elements.map(element => {
+                const r2 = element.getBoundingClientRect();
+                const box = substractRect(boundingBox, r2);
+                let rectForBox = [];
+                for (i; i < len; i++) {
+                    let r = rects[i];
+                    if (intersectRect(box, r)) {
+                        let nr = normalizeRect(element, r);
+                        rectForBox.push(nr);
+                    } else {
+                        break;
+                    }
+                }
+
+                return {
+                    pageNumber: element.dataset.page,
+                    boundingBox: normalizeRect(element, box),
+                    rects: rectForBox
+                };
+            });
+
+            function normalizeRect(element, rect) {
+                const dx = deltaX - element.offsetLeft;
+                const dy = deltaY - element.offsetTop;
+                return {
+                    top: rect.top + dy,
+                    left: rect.left + dx,
+                    bottom: rect.bottom + dy,
+                    right: rect.right + dx,
+                    width: rect.width,
+                    height: rect.height
+                };
+            }
+        }
+
+        function getContainers(start, end) {
+            if (start === end) {
+                return [parents(start, isPageNode)];
+            }
+
+            start = parents(start, isPageNode);
+            if (!start) {
+                throw new Error('null start');
+            }
+            let containers = [start];
+            let node = start;
+            while (node.nextElementSibling) {
+                node = node.nextElementSibling;
+                containers.push(node);
+                if (node === end || node.contains(end)) {
+                    console.log('ret');
+                    return containers;
+                } else {
+                    console.log('node not end?', node, end, start);
+                }
+            }
+            console.error(end, node, containers);
+            throw new Error('end not reachable');
+        }
+
+        document.addEventListener('mousedown', e => {
+            document.body.classList.add('mousedown');
+        });
+
+        const scrollTarget = document.querySelector('.container');
+
+        document.addEventListener('mouseup', e => {
+            document.body.classList.remove('mousedown');
+        });
+
+        const container = document.querySelector('.container');
+        let scale = 1;
+
+        document.querySelector('#hightlight-button').addEventListener('click', clickHandler);
+        document.querySelector('#zoom-in-button').addEventListener('click', () => {
+            zoom(0.2);
+        });
+        document.querySelector('#zoom-out-button').addEventListener('click', () => {
+            if (scale > 0.5) {
+                zoom(-0.2)
+            }
+        });
+
+        function zoom(delta) {
+            scale += delta;
+            if (scale === 1) {
+                container.style.transform = '';
+            } else {
+                container.style.transform = `scale(${scale})`;
+            }
+        }
+
+        function createHighlight(box, rects) {
+            let canvas = document.createElement('canvas');
+            canvas.style.transform = `translate(${box.left}px, ${box.top}px)`;
+            canvas.width = box.width;
+            canvas.height = box.height;
+
+            const ctx = canvas.getContext('2d', { alpha: true });
+            ctx.globalAlpha = 0.2;
+            ctx.fillStyle = "#FF0000";
+
+            Array.from(rects).forEach(rect => {
+                const left = rect.left - box.left;
+                const top = rect.top - box.top;
+                ctx.fillRect(left, top, rect.width, rect.height);
+            });
+
+            return canvas;
+        }
+
+        function getRange() {
+            const sel = window.getSelection();
+            let boundingBox;
+            let startContainer, endContainer;
+            let rects = [];
+            for (let i = 0; i < sel.rangeCount; i++) {
+                const range = sel.getRangeAt(i);
+                let box = range.getBoundingClientRect();
+                rects = rects.concat(Array.from(range.getClientRects()));
+
+                if (i === 0) {
+                    startContainer = range.startContainer;
+                    boundingBox = box;
+                } else {
+                    boundingBox = mergeRect(boundingBox, box);
+                }
+
+                if (i === sel.rangeCount - 1) {
+                    endContainer = range.endContainer;
+                }
+            }
+
+            return {
+                boundingBox,
+                startContainer,
+                endContainer,
+                rects
+            };
+        }
+
+        function clickHandler() {
+            let transform = container.style.transform;
+            let scrollTopToRestore;
+            if (transform !== '') {
+                scrollTopToRestore = scrollTarget.scrollTop;
+                container.style.transform = '';
+            }
+
+            const scrollTop = scrollTarget.scrollTop;
+            const scrollLeft = scrollTarget.scrollLeft;
+            const offsetLeft = scrollTarget.offsetLeft;
+            const offsetTop = scrollTarget.offsetTop;
+            const deltaX = scrollLeft - offsetLeft;
+            const deltaY = scrollTop - offsetTop;
+
+            document.body.classList.add('selecting');
+
+            const range = getRange();
+            let { boundingBox, rects } = range;
+            if (rects.length === 0) {
+                return;
+            }
+            console.log(range.startContainer);
+            console.log(range.endContainer);
+
+            let containers = getContainers(range.startContainer, range.endContainer);
+
+            let hightlights = splitRect(boundingBox, containers, rects, { deltaX, deltaY });
+
+            console.log('hightlights:', hightlights);
+            document.body.classList.remove('selecting');
+
+            hightlights.forEach(highlight => {
+                let canvas = createHighlight(highlight.boundingBox, highlight.rects);
+                const pageElement = document.querySelector(`[data-page="${highlight.pageNumber}"]`);
+                pageElement.appendChild(canvas);
+            });
+
+            if (transform !== '') {
+                container.style.transform = transform;
+                scrollTarget.scrollTop = scrollTopToRestore;
+            }
+        }
+
+    </script>
+</body>
+
+</html>

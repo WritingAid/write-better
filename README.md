@@ -82,6 +82,7 @@ google-chrome --pack-extension=extension  [--pack-extension-key=<extension_key>]
 2. Background script can be located in Manage Extensions -> (Find loaded extension) -> Background page.
 3. After a rebuild, reload extension using reload button on the extension card at chrome://extensions/
 
+Manifest v3 schema - https://developer.chrome.com/docs/extensions/mv3/manifest/
 
 #### PRs to track
 

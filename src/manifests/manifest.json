@@ -1,12 +1,12 @@
 {
   "name": "Write Better",
-  "version": "0.3.0",
+  "version": "22.03.24",
   "description": "English grammar suggestions for better writing",
   "manifest_version": 3,
   "author": "Justice Ogbonna",
   "homepage_url": "https://github.com/justiceo/write-better",
   "permissions": ["storage"],
-  "host_permissions": ["https://docs.google.com/*"],
+  "host_permissions": ["*://*/*"],
   "action": {
     "default_icon": {
       "16": "images/icon-16x16.png",
@@ -16,16 +16,13 @@
     "default_title": "Write Better",
     "default_popup": ""
   },
-  "content_scripts": [
-    {
-      "all_frames": true,
-      "matches": ["https://docs.google.com/*"],
-      "include_globs": ["https://docs.google.com/document/d/*"],
-      "run_at": "document_start",
-      "js": ["content-script.js"],
-      "css": ["content-script.css"]
-    }
-  ],
+  "content_scripts": [{
+    "all_frames": true,
+    "matches": ["*://*/*"],
+    "run_at": "document_idle",
+    "js": ["content-script.js"],
+    "css": ["content-script.css"]
+  }],
   "icons": {
     "16": "images/icon-16x16.png",
     "24": "images/icon-24x24.png",

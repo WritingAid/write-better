@@ -3,6 +3,13 @@ import { filter, map, finalize, throttle } from 'rxjs/operators';
 import { Suggestion } from './suggestion';
 import { Logger } from '../shared/logger';
 import { Highlight } from './highlight';
+import {
+    computePosition,
+    flip,
+    shift,
+    offset,
+    arrow,
+} from '@floating-ui/dom';
 const writeGood: (input: string) => Suggestion[] = require('write-good');
 
 const TAG = 'writebetter.ts';
@@ -21,6 +28,7 @@ export class WriteBetter {
             } `;
 
     constructor() {
+        Log.warn("initialized");
         this.css = document.createElement('style');
         this.css.title = 'write-better-css-file';
         this.css.id = 'write-better-css';
@@ -28,20 +36,14 @@ export class WriteBetter {
         document.body.appendChild(this.css);
     }
 
-    analyze(selector: string, inplace = true): HTMLElement {
-        const e = document.querySelector(selector) as HTMLElement;
-        if (e == null) {
-            Log.error("Query selector is null");
-            return null;
-        }
-
+    analyze(e: HTMLElement, inplace = true): HTMLElement {
         if (this.getCleanText(e) == this.previousText) {
             Log.debug("No change in content, nothing to do.");
             return e;
         }
 
         this.previousText = this.getCleanText(e);
-        this.selector = selector;
+        this.selector = this.genSelector(e);
 
         const subscription = this.smartSplitter(e)
             .pipe(map(e => this.applySuggestions(e, inplace)),
@@ -57,13 +59,53 @@ export class WriteBetter {
     }
 
 
-    analyzeAndWatch(selector: string): void {
-        // Select the node that will be observed for mutations
-        const targetNode = document.querySelector(selector) as HTMLElement;
-        if (targetNode == null) {
-            Log.error("Editor target node is null");
-            return null;
+    analyzeAndWatch(targetNode: HTMLElement): void {
+
+        // If the webpage explicitly set spellcheck=false, respect it. Example use-case is online code editors.
+        if (targetNode.hasAttribute("spellcheck") && targetNode.getAttribute("spellcheck") === "false") {
+            return;
         }
+
+        // Add icon at bottom right corner.
+        const button = document.querySelector('#button');
+        const tooltip = document.querySelector('#tooltip') as HTMLElement;
+        const arrowElement = document.querySelector('#arrow') as HTMLElement;
+
+
+        function update() {
+            computePosition(button, tooltip, {
+                placement: 'top',
+                middleware: [
+                    offset(6),
+                    flip(),
+                    shift({ padding: 5 }),
+                    arrow({ element: arrowElement }),
+                ],
+            }).then(({ x, y }) => {
+                Object.assign(tooltip.style, {
+                    left: `${x}px`,
+                    top: `${y}px`,
+                });
+            });
+        }
+
+        function showTooltip() {
+            tooltip.style.display = 'block';
+            update();
+        }
+
+        function hideTooltip() {
+            tooltip.style.display = '';
+        }
+
+        [
+            ['mouseenter', showTooltip],
+            ['mouseleave', hideTooltip],
+            ['focus', showTooltip],
+            ['blur', hideTooltip],
+        ].forEach(([event, listener]) => {
+            button.addEventListener(event, listener);
+        });
 
         // Options for the observer (which mutations to observe)
         const config: MutationObserverInit = { attributes: true, childList: true, subtree: true, characterData: true };
@@ -73,7 +115,7 @@ export class WriteBetter {
         const domChangeSubject = new Subject();
         domChangeSubject
             .pipe(throttle(() => interval(1000), { leading: true, trailing: true }))
-            .subscribe(() => this.analyze(selector));
+            .subscribe(() => this.analyze(targetNode));
 
         // Function called whenever the DOM changes, in this case, notify subject.
         const callback = () => domChangeSubject.next();
@@ -82,7 +124,13 @@ export class WriteBetter {
         this.observer = new MutationObserver(callback);
 
         // Start observing the target node for configured mutations
-        this.observer.observe(targetNode, config);
+        try {
+            this.observer.observe(targetNode, config);
+        } catch (e) {
+            if (e instanceof TypeError) {
+                Log.error("targetNode is not a Node, but ", typeof e);
+            }
+        }
 
         // Trigger an initial call for analysis, incase extension is loaded after DOM is setup.
         setTimeout(() => domChangeSubject.next(), 1000);
@@ -218,7 +266,7 @@ export class WriteBetter {
                 .pipe(filter(e => !this.isCached(e))); // only emit modified paragraphs.
         }
 
-        return from([]);
+        return from([e]);
     }
 
     isCached(paragraph: HTMLElement): boolean {
@@ -228,6 +276,25 @@ export class WriteBetter {
 
     isGoogleDocs(): boolean {
         return location.hostname.includes("docs.google.com");
+    }
+
+    // Ref - https://stackoverflow.com/a/4588211
+    genSelector(el): string {
+        var names = [];
+        while (el.parentNode) {
+            if (el.id) {
+                names.unshift('#' + el.id);
+                break;
+            } else {
+                if (el == el.ownerDocument.documentElement) names.unshift(el.tagName);
+                else {
+                    for (var c = 1, e = el; e.previousElementSibling; e = e.previousElementSibling, c++);
+                    names.unshift(el.tagName + ":nth-child(" + c + ")");
+                }
+                el = el.parentNode;
+            }
+        }
+        return names.join(" > ");
     }
 
     static replaceAll(input: string, pairs: Map<string, string>): string {

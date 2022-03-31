@@ -1,6 +1,6 @@
 {
   "name": "write-better",
-  "version": "0.3.0",
+  "version": "22.03.24",
   "description": "Grammar and writing style suggestions to improve the quality of your writings",
   "scripts": {
     "test": "gulp Test",
@@ -27,6 +27,7 @@
     "words"
   ],
   "dependencies": {
+    "@floating-ui/dom": "^0.4.2",
     "@sentry/browser": "^6.18.1",
     "@sentry/tracing": "^6.18.1",
     "rxjs": "^6.6.3",
@@ -43,13 +44,13 @@
     "@types/puppeteer": "^5.4.5",
     "@wext/shipit": "^0.2.1",
     "browserify": "^17.0.0",
+    "calver": "^21.11.3",
     "chromedriver": "^98.0.1",
     "decache": "^4.6.1",
     "del": "^6.0.0",
     "dotenv": "^16.0.0",
     "gulp": "^4.0.2",
-    "gulp-bump": "^3.2.0",
-    "gulp-filter": "^7.0.0",
+    "gulp-json-editor": "^2.5.6",
     "gulp-typescript": "^5.0.1",
     "gulp-zip": "^5.1.0",
     "jasmine": "^3.6.1",
