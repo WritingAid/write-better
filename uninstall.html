@@ -35,29 +35,29 @@
         <form action="post" autocomplete="off" name="google-sheet">
           <div class="form-check mb-1">
             <input class="form-check-input" type="checkbox" value="yes" id="check1"
-              name="I didn't find a specific feature I needed">
+              name="missing_feature" />
             <label class="form-check-label" for="check1">
               The extension is great but I didn't find a specific feature I needed
             </label>
           </div>
 
           <div class="form-check mb-1">
-            <input class="form-check-input" type="checkbox" name="Didn't work as I expected" value="yes" id="check2">
+            <input class="form-check-input" type="checkbox" name="not_working" value="yes" id="not_working" />
             <label class="form-check-label" for="check2">
               The extension didn't work as I expected
             </label>
           </div>
 
           <div class="form-check mb-1">
-            <input class="form-check-input" name="I found a better extension/alternative" type="checkbox" value="yes"
-              id="check3">
+            <input class="form-check-input" name="found_alternative" type="checkbox" value="yes"
+              id="found_alternative" />
             <label class="form-check-label" for="check3">
               I found a better extension/alternative
             </label>
           </div>
 
           <div class="form-check mb-1">
-            <input class="form-check-input" type="checkbox" name="Temporary uninstall" value="yes" id="check4">
+            <input class="form-check-input" type="checkbox" name="temporary" value="Yes" id="temporary" />
             <label class="form-check-label" for="check4">
               This is a temporary uninstall
             </label>
@@ -65,7 +65,7 @@
 
 
           <div class="form-check mb-1">
-            <input class="form-check-input" type="checkbox" name="Other" value="optionFive" id="check4">
+            <input class="form-check-input" type="checkbox" name="other" value="Yes" id="check4" />
             <label class="form-check-label" for="check4">
               Other
             </label>
@@ -73,12 +73,12 @@
 
 
           <div class="form-floating mt-4">
-            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="Reason"
+            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" value="placeholder" name="reason"
               style="height: 100px"></textarea>
             <label for="floatingTextarea2">Tell us more</label>
           </div>
 
-          <input type="submit" value="Submit" class="customBtn btn btn-primary">
+          <input type="submit" value="Submit" class="customBtn btn btn-primary" />
         </form>
 
 
@@ -105,4 +105,5 @@
     </script>
   <script src="uninstall.js">  </script>
 </body>
+
 </html>
