@@ -142,7 +142,7 @@ const bump = (jsonFile, dest) => {
     const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 
     const format = '0y.0m.0d'; // 0-padded year, 0-padded month and 0-padded day.
-    const newVer = calver.inc(format, pkg.version, 'patch');
+    const newVer = calver.inc(format, pkg.version, 'calendar');
 
     return gulp.src(jsonFile)
         .pipe(jeditor({ 'version': newVer }))
